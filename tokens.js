@@ -11,10 +11,10 @@
 
 // Comments are ignored.
 
-RegExp.prototype.bexec = function(str) {
-  var i = this.lastIndex;
-  var m = this.exec(str);
-  if (m && m.index == i) return m;
+RegExp.prototype.bexec = function(str) {      //metodo para las expresiones regulares que funciona parecido al exec
+  var i = this.lastIndex;                     //mira como esta el lastindex de la expresion regular
+  var m = this.exec(str);                     //hago un exec normal
+  if (m && m.index == i) return m;            //a casado justo donde esta lastIndex?? Casa solo a partir de la posicion lastIndex
   return null;
 }
 
