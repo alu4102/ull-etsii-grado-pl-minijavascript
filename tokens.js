@@ -54,36 +54,36 @@ String.prototype.tokens = function () {
     };
 
     // Begin tokenization. If the source string is empty, return nothing.
-    if (!this) return; 
+    if (!this) return;                                                    //si la cadena no es vacia, si this es false la cadena es vacio
 
     // Loop through this text
-    while (i < this.length) {
+    while (i < this.length) {                              
         tokens.forEach( function(t) { t.lastIndex = i;}); // Only ECMAScript5
         from = i;
         // Ignore whitespace and comments
-        if (m = WHITES.bexec(this) || 
-           (m = ONELINECOMMENT.bexec(this))  || 
-           (m = MULTIPLELINECOMMENT.bexec(this))) { getTok(); }
+        if (m = WHITES.bexec(this) ||                                     //si la cadena casa con blancos
+           (m = ONELINECOMMENT.bexec(this))  ||                           // es comentario de una linea
+           (m = MULTIPLELINECOMMENT.bexec(this))) { getTok(); }           // es comentario de multiples lineas
         // name.
-        else if (m = ID.bexec(this)) {
+        else if (m = ID.bexec(this)) {                                    
             result.push(make('name', getTok()));
         } 
         // number.
-        else if (m = NUM.bexec(this)) {
-            n = +getTok();
+        else if (m = NUM.bexec(this)) {                                   //si casa con numero
+            n = +getTok();                                                //lo convierto a numero
 
-            if (isFinite(n)) {
-                result.push(make('number', n));
+            if (isFinite(n)) {                                            //comprobamos si es un numero que se puede almacenar
+                result.push(make('number', n));                           
             } else {
-                make('number', m[0]).error("Bad number");
+                make('number', m[0]).error("Bad number");                 
             }
         } 
         // string
-        else if (m = STRING.bexec(this)) {
-            result.push(make('string', getTok().replace(/^["']|["']$/g,'')));
+        else if (m = STRING.bexec(this)) {                                
+            result.push(make('string', getTok().replace(/^["']|["']$/g,'')));   //quitamos las comillas xk getTok() la devuelve con comillas
         } 
         // two char operator
-        else if (m = TWOCHAROPERATORS.bexec(this)) {
+        else if (m = TWOCHAROPERATORS.bexec(this)) {                            
             result.push(make('operator', getTok()));
         // single-character operator
         } else if (m = ONECHAROPERATORS.bexec(this)){
